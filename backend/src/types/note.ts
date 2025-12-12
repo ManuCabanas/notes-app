@@ -1,7 +1,8 @@
+import { NoteStatus } from '@prisma/client';
+
 export interface NoteUpsertDTO {
-  title?: string | undefined;
+  title: string;
   content?: string | undefined;
-  archived?: boolean | undefined;
+  status?: NoteStatus | undefined;
+  categoryId?: string | undefined;
 }
-
-
