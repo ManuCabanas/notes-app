@@ -24,7 +24,7 @@ export const noteApi = baseApi.injectEndpoints({
     }),
     getNotesByStatus: builder.query<Note[], NoteStatus>({
       query: (status) => ({
-        url: `/notes?status=${status}`,
+        url: `/notes`,
         params: { status },
       }),
       providesTags: (result, _error, status) =>

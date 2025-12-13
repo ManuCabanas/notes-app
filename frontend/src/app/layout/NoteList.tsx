@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Note } from "../../shared/components/ui/Note";
-import { useGetNotesQuery } from "../../store/noteApi";
+import { useGetNotesByStatusQuery } from "../../store/noteApi";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 
@@ -12,7 +12,7 @@ export function NoteList() {
     isLoading,
     isFetching,
     isError,
-  } = useGetNotesQuery(notesStatus);
+  } = useGetNotesByStatusQuery(notesStatus);
 
   if (isLoading) return <div>Cargando notas…</div>;
   if (isError) return <div>Error cargando notas</div>;
