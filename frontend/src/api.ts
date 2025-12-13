@@ -19,3 +19,8 @@ export interface NoteUpsertDTO {
   content?: string | null;
   categoryId?: string | null;
 }
+
+export interface Category {
+  name: string;
+  color: string;
+}

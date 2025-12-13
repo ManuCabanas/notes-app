@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
-import styled from "styled-components"
+import styled from "styled-components";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
@@ -23,7 +23,7 @@ const ButtonDiv = styled.button`
   border: none;
   border-radius: 10px;
 
-  background-color: #c57a2a; /* similar a hsl(25 60% 45%) */
+  background-color: #a67c3c; /* similar a hsl(25 60% 45%) */
   color: #faf7f2;
 
   font-family: inherit;
@@ -34,10 +34,8 @@ const ButtonDiv = styled.button`
   cursor: pointer;
   white-space: nowrap;
 
-  transition:
-    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 100ms ease,
-    box-shadow 150ms ease;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 100ms ease, box-shadow 150ms ease;
 
   &:hover {
     background-color: #b56f24; /* un poco más oscuro */

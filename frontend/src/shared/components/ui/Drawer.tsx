@@ -16,10 +16,7 @@ export function Drawer({
 }: DrawerProps) {
   return (
     <>
-      {/* Overlay: click afuera cierra */}
       <Overlay $open={open} onClick={onClose} />
-
-      {/* Panel: stopPropagation para que click adentro NO cierre */}
       <Panel
         $open={open}
         role="dialog"
@@ -33,7 +30,6 @@ export function Drawer({
             ✕
           </CloseButton>
         </Header>
-
         <Content>{children}</Content>
       </Panel>
     </>
@@ -60,7 +56,7 @@ const Panel = styled.aside<{ $open: boolean }>`
   top: 0;
   right: 0;
   height: 100vh;
-  width: min(500px, 92vw);
+  width: min(650px, 92vw);
 
   background: #ffffff;
   border-left: 1px solid rgba(0, 0, 0, 0.08);

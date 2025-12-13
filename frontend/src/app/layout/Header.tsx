@@ -5,8 +5,7 @@ import { Drawer } from "../../shared/components/ui/drawer";
 import { useState } from "react";
 
 export function Header() {
-
-const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Navbar>
@@ -14,8 +13,8 @@ const [open, setOpen] = useState(false);
         <NoteIcon />
         <Title>Nōta</Title>
         <Button onClick={() => setOpen(true)}>+ New Note</Button>
-        <Drawer open={open} onClose={() => setOpen(false)}> 
-            hola
+        <Drawer open={open} onClose={() => setOpen(false)}>
+          hola
         </Drawer>
       </Inner>
     </Navbar>
@@ -28,18 +27,17 @@ const Navbar = styled.header`
   top: 0;
   z-index: 100;
 
-  background: #FCF8F8;
+  background: #fcf8f8;
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 
   min-height: 64px;
   max-height: 82px;
-
 `;
 
 const Inner = styled.div`
   width: 100%;
-  padding: 16px 24px; 
+  padding: 16px 24px;
   display: flex;
   align-items: center;
 `;
