@@ -21,6 +21,12 @@ export interface NoteUpsertDTO {
 }
 
 export interface Category {
+  id: string;
+  name: string;
+  color: string;
+}
+
+export interface CategoryUpsertDTO {
   name: string;
   color: string;
 }

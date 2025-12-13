@@ -1,33 +1,34 @@
 import styled from "styled-components";
 import { Note } from "../../shared/components/ui/Note";
-
-const notes = [
-  {
-    title: "Note1",
-    content: "content1",
-    category: {
-      name: "Work",
-      color: "#f65a5aff",
-    },
-  },
-  {
-    title: "Note2",
-    content: "content2",
-    category: {
-      name: "Exercise",
-      color: "#9fde96ff",
-    },
-  },
-];
+import { useGetNotesQuery } from "../../store/noteApi";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 export function NoteList() {
+  const notesStatus = useSelector((state: RootState) => state.ui.notesStatus);
+
+  const {
+    data: notes,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetNotesQuery(notesStatus);
+
+  if (isLoading) return <div>Cargando notas…</div>;
+  if (isError) return <div>Error cargando notas</div>;
+
+  if (!notes?.length) return <div>No hay notas</div>;
+
   return (
-    <NoteContainer>
+    <NoteContainer aria-busy={isFetching}>
       {notes.map((note) => (
         <Note
+          id={note.id}
+          key={note.id}
           title={note.title}
-          content={note.content}
-          category={note.category}
+          content={note.content ?? ""}
+          status={notesStatus}
+          category={note.category ?? undefined}
         />
       ))}
     </NoteContainer>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 type DrawerProps = {
@@ -10,18 +11,27 @@ type DrawerProps = {
 
 export function Drawer({
   open,
-  title = "Menu",
+  title = "Write your note!",
   onClose,
   children,
 }: DrawerProps) {
-  return (
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  if (!open || typeof document === "undefined") return null;
+
+  return createPortal(
     <>
-      <Overlay $open={open} onClick={onClose} />
+      <Overlay onClick={onClose} />
       <Panel
-        $open={open}
         role="dialog"
         aria-modal="true"
-        aria-hidden={!open}
         onClick={(e) => e.stopPropagation()}
       >
         <Header>
@@ -32,26 +42,36 @@ export function Drawer({
         </Header>
         <Content>{children}</Content>
       </Panel>
-    </>
+    </>,
+    document.body
   );
 }
 
-const Overlay = styled.div<{ $open: boolean }>`
+const Overlay = styled.div`
   position: fixed;
   inset: 0;
 
-  /* oscurece + BLUR del contenido detrás */
   background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(10px);
 
-  opacity: ${({ $open }) => ($open ? 1 : 0)};
-  pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
-  transition: opacity 160ms ease;
+  z-index: 999;
 
-  z-index: 90;
+  opacity: 0;
+  animation: fadeIn 200ms ease forwards;
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 1;
+  }
 `;
 
-const Panel = styled.aside<{ $open: boolean }>`
+const Panel = styled.aside`
   position: fixed;
   top: 0;
   right: 0;
@@ -62,13 +82,29 @@ const Panel = styled.aside<{ $open: boolean }>`
   border-left: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: -24px 0 60px rgba(0, 0, 0, 0.15);
 
-  transform: translateX(${({ $open }) => ($open ? "0%" : "100%")});
-  transition: transform 200ms ease;
-
-  z-index: 100;
+  z-index: 1000;
 
   display: flex;
   flex-direction: column;
+
+  transform: translateX(0);
+  animation: slideIn 320ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  will-change: transform;
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  /* Respeta accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 const Header = styled.div`

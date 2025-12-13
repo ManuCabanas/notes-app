@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import type { Category } from "../../../api";
+import type { Category } from "../../../types";
 
 const Label = styled.div<{ color: string }>`
   display: inline-flex;
