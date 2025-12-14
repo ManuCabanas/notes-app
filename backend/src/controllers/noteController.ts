@@ -24,8 +24,8 @@ export const updateNote = handleRequest(async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Missing note id' });
   }
 
-  const { title, content, categoryId } = req.body;
-  const note = await noteService.updateNote(id, { title, content, categoryId });
+  const { title, content, categoryId, status } = req.body;
+  const note = await noteService.updateNote(id, { title, content, categoryId, status });
   res.json(note);
 }, 'Error updating note');
 

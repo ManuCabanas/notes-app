@@ -18,6 +18,7 @@ export interface NoteUpsertDTO {
   title: string;
   content?: string | null;
   categoryId?: string | null;
+  status: NoteStatus
 }
 
 export interface Category {

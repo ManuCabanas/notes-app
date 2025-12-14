@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleNotesStatus } from "../../store/uiSlice";
 import type { RootState } from "../../store/store";
+import { ArchiveIcon } from "../../shared/components/ui/ArchiveIcon";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -21,21 +22,24 @@ export function Header() {
         <NoteIcon />
         <Title>Nōta</Title>
 
-        {/* Toggle archivadas / activas */}
-        <ArchiveButton
-          type="button"
-          onClick={() => dispatch(toggleNotesStatus())}
-          title={isActive ? "Ver archivadas" : "Ver activas"}
-        >
-          🗄️
-          <ArchiveText>{isActive ? "Archivadas" : "Activas"}</ArchiveText>
-        </ArchiveButton>
+        <Actions>
+          <ArchiveButton
+            type="button"
+            onClick={() => dispatch(toggleNotesStatus())}
+            title={isActive ? "Ver archivadas" : "Ver activas"}
+          >
+            <ArchiveIcon />
+            <ArchiveText>{isActive ? "Archived" : "Actives"}</ArchiveText>
+          </ArchiveButton>
 
-        <Button onClick={() => setOpen(true)}>+ New Note</Button>
+          <Button onClick={() => setOpen(true)}>+ New Note</Button>
+        </Actions>
 
-        <Drawer open={open} onClose={() => setOpen(false)}>
-          hola
-        </Drawer>
+        <Drawer
+          open={open}
+          notesStatus={notesStatus}
+          onClose={() => setOpen(false)}
+        />
       </Inner>
     </Navbar>
   );
@@ -69,10 +73,14 @@ const Title = styled.h1`
   padding-left: 10px;
 `;
 
-const ArchiveButton = styled.button`
+const Actions = styled.div`
   margin-left: auto;
-  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
 
+const ArchiveButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 6px;
