@@ -17,7 +17,7 @@ type Props = {
   notesStatus: NoteStatus; // viene de Redux
   onEdit?: (id: string) => void;
 };
-
+//Note container
 export function NoteContainer({ note, notesStatus, onEdit }: Props) {
   const [updateNote, { isLoading: updating }] = useUpdateNoteMutation();
   const [deleteNote, { isLoading: deleting }] = useDeleteNoteMutation();
