@@ -21,7 +21,6 @@ model Note {
   category   Category?  @relation(fields: [categoryId], references: [id])
   createdAt  DateTime   @default(now())
   categoryId String?
-  updatedAt  DateTime   @updatedAt
 }
 
 enum NoteStatus {

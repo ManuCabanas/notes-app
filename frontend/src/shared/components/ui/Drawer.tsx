@@ -185,7 +185,7 @@ function DrawerForm({
           <Input
             value={noteTitle}
             onChange={(e) => setNoteTitle(e.target.value)}
-            placeholder="E.g. Buy milk"
+            placeholder="E.g. Supermarket"
             autoFocus
             disabled={isSaving}
           />
@@ -196,7 +196,7 @@ function DrawerForm({
           <Textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write something…"
+            placeholder="Write your note here…"
             rows={10}
             disabled={isSaving}
           />
@@ -338,8 +338,10 @@ const Input = styled.input`
   border: 1px solid rgba(84, 74, 57, 0.18);
   background: rgba(255, 255, 255, 0.75);
   padding: 10px 12px;
-  font-size: 14px;
-  color: #2f2a22;
+  font-family: "Patrick Hand", cursive;
+  font-size: 22px;
+  color: #3a3632;
+  letter-spacing: 0.5px;
   outline: none;
 
   &:focus {
@@ -349,6 +351,10 @@ const Input = styled.input`
   &:disabled {
     opacity: 0.7;
   }
+
+  &::placeholder {
+    color: #9a9287;
+  }
 `;
 
 const Textarea = styled.textarea`
@@ -356,8 +362,12 @@ const Textarea = styled.textarea`
   border: 1px solid rgba(84, 74, 57, 0.18);
   background: rgba(255, 255, 255, 0.75);
   padding: 10px 12px;
-  font-size: 14px;
-  color: #2f2a22;
+  font-family: "Caveat", cursive;
+  font-size: 20px;
+  font-weight: 500;
+  color: #4a4540;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
   resize: vertical;
   outline: none;
 
@@ -367,6 +377,10 @@ const Textarea = styled.textarea`
 
   &:disabled {
     opacity: 0.7;
+  }
+
+  &::placeholder {
+    color: #9a9287;
   }
 `;
 

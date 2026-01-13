@@ -128,8 +128,9 @@ export function Note({
 }
 
 const NoteDiv = styled.div`
-  width: 450px;
+  width: 350px;
   height: 350px;
+  overflow: auto;
 
   background-color: #f9f5ed;
   border: 1px solid #e6dfaf;
@@ -170,9 +171,10 @@ const CategoryWrap = styled.div`
 
 const Title = styled.div`
   font-family: "Patrick Hand", cursive;
-  font-size: 30px;
-  font-weight: 900;
-  color: #46443f;
+  font-size: 26px;
+  font-weight: 400;
+  color: #3a3632;
+  letter-spacing: 0.5px;
 
   max-width: 70%;
   overflow: hidden;
@@ -181,14 +183,18 @@ const Title = styled.div`
 `;
 
 const NoteContent = styled.div`
-  font-family: "Source Sans 3", sans-serif;
-  color: #322a1f;
-  opacity: 0.7;
+  font-family: "Caveat", cursive;
+  font-size: 20px;
+  font-weight: 500;
+  color: #4a4540;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
 
   padding-top: 10px;
 
   flex: 1;
   overflow: auto;
+  white-space: pre-wrap;
 `;
 
 const Footer = styled.div`
