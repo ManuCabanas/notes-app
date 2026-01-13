@@ -37,7 +37,7 @@ export const noteApi = baseApi.injectEndpoints({
     }),
     getNoteById: builder.query<Note, string>({
       query: (noteId) => `/notes/${noteId}`,
-      providesTags: (result, error, noteId) => [{ type: "Notes", id: noteId }],
+      providesTags: (_result, _error, noteId) => [{ type: "Notes", id: noteId }],
     }),
     createNote: builder.mutation<Note, NoteUpsertDTO>({
       query: (note) => ({

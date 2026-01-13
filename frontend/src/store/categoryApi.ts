@@ -16,41 +16,46 @@ export const categoryApi = baseApi.injectEndpoints({
           : [{ type: "Categories" as const, id: "LIST" }],
     }),
     getCategoryById: builder.query<Category, string>({
-        query: (categoryId) => ({
-            url: `/categories/${categoryId}`,
-        }),
-        providesTags: (result, error, categoryId) => [{type: "Categories", id: categoryId}]
+      query: (categoryId) => ({
+        url: `/categories/${categoryId}`,
+      }),
+      providesTags: (_result, _error, categoryId) => [
+        { type: "Categories", id: categoryId },
+      ],
     }),
     createCategory: builder.mutation<Category, CategoryUpsertDTO>({
-        query: (category) => ({
-            url: `/categories`,
-            method: "POST",
-            body: category,
-        }),
-        invalidatesTags: (_, error) => (error ? [] : ["Categories"]),
+      query: (category) => ({
+        url: `/categories`,
+        method: "POST",
+        body: category,
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ["Categories"]),
     }),
-    updateCategory: builder.mutation<Category, CategoryUpsertDTO & {id: string}>({
-        query: (category) => ({
-            url: `/categories/${category.id}`,
-            method: "PUT",
-            body: category,
-        }),
-        invalidatesTags: (_, error) => (error ? [] : ["Categories"])
+    updateCategory: builder.mutation<
+      Category,
+      CategoryUpsertDTO & { id: string }
+    >({
+      query: (category) => ({
+        url: `/categories/${category.id}`,
+        method: "PUT",
+        body: category,
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ["Categories"]),
     }),
     deleteCategory: builder.mutation<void, string>({
-        query: (categoryId) => ({
-            url: `categories/${categoryId}`,
-            method: "DELETE"
-        }),
-        invalidatesTags: (_, error) => (error ? [] : ["Categories"]),
-    })
+      query: (categoryId) => ({
+        url: `categories/${categoryId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ["Categories"]),
+    }),
   }),
 });
 
-export const { 
-    useGetCategoriesQuery,
-    useGetCategoryByIdQuery,
-    useCreateCategoryMutation,
-    useUpdateCategoryMutation,
-    useDeleteCategoryMutation
+export const {
+  useGetCategoriesQuery,
+  useGetCategoryByIdQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
 } = categoryApi;
