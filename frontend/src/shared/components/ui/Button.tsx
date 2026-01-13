@@ -13,7 +13,7 @@ const ButtonDiv = styled.button`
   height: 40px;
 
   margin-left: auto;
-  margin-right: 20px;
+  
 
   display: inline-flex;
   align-items: center;

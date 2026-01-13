@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CategoryLabel } from "./CategoryLabel";
+import { CategoryLabel } from "../CategoryLabel";
 import type { Category } from "../../../types";
 
 type NoteStatus = "ACTIVE" | "INACTIVE";

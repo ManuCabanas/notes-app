@@ -1,21 +1,98 @@
+/* ===== CSS Reset ===== */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-html,
-body {
   margin: 0;
   padding: 0;
+}
+
+/* ===== CSS Variables - Design System ===== */
+:root {
+  /* Primary Colors - Warm Earth Tones */
+  --color-primary: #8B5A2B;
+  --color-primary-light: #A67C52;
+  --color-primary-dark: #6B4423;
+  --color-primary-glow: rgba(139, 90, 43, 0.15);
+  
+  /* Accent Colors */
+  --color-accent: #D4A574;
+  --color-accent-light: #E8C9A8;
+  
+  /* Background Colors */
+  --color-bg-page: #FBF8F4;
+  --color-bg-paper: #FDF9F3;
+  --color-bg-note: #FFFCF7;
+  --color-bg-hover: #F5EFE6;
+  --color-bg-elevated: #FFFFFF;
+  
+  /* Text Colors */
+  --color-text-primary: #2C2416;
+  --color-text-secondary: #5C4D3C;
+  --color-text-muted: #8B7355;
+  --color-text-placeholder: #A89880;
+  
+  /* Border Colors */
+  --color-border: rgba(139, 90, 43, 0.12);
+  --color-border-strong: rgba(139, 90, 43, 0.25);
+  --color-border-note: #E8DFD0;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(44, 36, 22, 0.06);
+  --shadow-md: 0 4px 12px rgba(44, 36, 22, 0.08);
+  --shadow-lg: 0 8px 30px rgba(44, 36, 22, 0.12);
+  --shadow-xl: 0 20px 50px rgba(44, 36, 22, 0.15);
+  --shadow-note: 0 2px 8px rgba(44, 36, 22, 0.06), 0 8px 24px rgba(44, 36, 22, 0.08);
+  --shadow-note-hover: 0 4px 12px rgba(44, 36, 22, 0.1), 0 16px 40px rgba(44, 36, 22, 0.12);
+  
+  /* Typography */
+  --font-display: "Patrick Hand", cursive;
+  --font-handwriting: "Caveat", cursive;
+  --font-body: "Source Sans 3", -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== Base Styles ===== */
+html,
+body {
   height: 100%;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background: #FCF8F8;
-  color: #111827;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-bg-page);
+  
+  /* Subtle paper texture */
+  background-image: 
+    radial-gradient(ellipse at 20% 30%, rgba(212, 165, 116, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(139, 90, 43, 0.05) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-blend-mode: overlay, overlay, soft-light;
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -23,8 +100,40 @@ body {
   width: 100%;
 }
 
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ===== Selection Styling ===== */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+/* ===== Focus Styling ===== */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ===== Icon Class ===== */
 .icon {
-  height: 50px;
-  width: 30px;
-  color: #af9465;
+  height: 40px;
+  width: 40px;
+  color: var(--color-primary);
 }

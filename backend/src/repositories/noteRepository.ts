@@ -10,6 +10,9 @@ export type NoteUpsertDTO = Prisma.NoteUncheckedCreateInput;
 export async function findMany(filter: NoteFindFilter) {
   return await db.note.findMany({
     where: filter,
+    include: {
+      category: true,
+    },
     orderBy: {
       createdAt: 'desc',
     },
@@ -21,12 +24,18 @@ export async function findById(id: string) {
     where: {
       id,
     },
+    include: {
+      category: true,
+    },
   });
 }
 
 export async function create(note: NoteUpsertDTO) {
   return await db.note.create({
     data: note,
+    include: {
+      category: true,
+    },
   });
 }
 
@@ -40,5 +49,8 @@ export async function update(id: string, note: NoteUpsertDTO) {
   return db.note.update({
     where: { id },
     data: note,
+    include: {
+      category: true,
+    },
   });
 }

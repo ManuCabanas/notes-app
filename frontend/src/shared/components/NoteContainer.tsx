@@ -1,7 +1,7 @@
-import type { Category, NoteStatus } from "../../../types";
+import type { Category, NoteStatus } from "../../types";
 import { Note } from "./Note";
-import { useUpdateNoteMutation, useDeleteNoteMutation } from "../../../store/noteApi";
-import { useGetCategoriesQuery } from "../../../store/categoryApi";
+import { useUpdateNoteMutation, useDeleteNoteMutation } from "../../store/noteApi";
+import { useGetCategoriesQuery } from "../../store/categoryApi";
 
 type CategoryWithId = Category & { id: string };
 

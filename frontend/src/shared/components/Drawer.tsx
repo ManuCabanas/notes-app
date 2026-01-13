@@ -5,8 +5,10 @@ import styled from "styled-components";
 import {
   useCreateNoteMutation,
   useUpdateNoteMutation,
-} from "../../../store/noteApi";
-import type { NoteStatus, NoteUpsertDTO } from "../../../types";
+} from "../../store/noteApi";
+import type { NoteStatus, NoteUpsertDTO } from "../../types";
+import { useGetCategoriesQuery } from "../../store/categoryApi";
+import { Selector } from "./ui/Selector";
 
 type DrawerProps = {
   open: boolean;
@@ -17,6 +19,7 @@ type DrawerProps = {
     id: string;
     title: string;
     content: string;
+    categoryId?: string;
   } | null;
 };
 
@@ -56,7 +59,6 @@ export function Drawer({
     onClose();
   }, [onClose]);
 
-  // ✅ para precargar cuando cambia editingNote, remount con key
   const formKey = editingNote?.id ?? "create";
 
   const errorMessage = useMemo(() => {
@@ -120,6 +122,7 @@ export function Drawer({
                   title: values.title,
                   content: values.content,
                   status: notesStatus,
+                  categoryId: values.categoryId || null,
                 }).unwrap();
 
                 onClose();
@@ -129,6 +132,7 @@ export function Drawer({
               const payload: NoteUpsertDTO = {
                 title: values.title,
                 content: values.content,
+                categoryId: values.categoryId || null,
               } as NoteUpsertDTO;
 
               await createNote(payload).unwrap();
@@ -137,6 +141,7 @@ export function Drawer({
             initialValues={{
               title: editingNote?.title ?? "",
               content: editingNote?.content ?? "",
+              categoryId: editingNote?.categoryId,
             }}
           />
         </Content>
@@ -159,11 +164,13 @@ function DrawerForm({
   isSaving: boolean;
   errorMessage: string | null;
   onCancel: () => void;
-  onSubmit: (values: { title: string; content: string }) => Promise<void>;
-  initialValues: { title: string; content: string };
+  onSubmit: (values: { title: string; content: string; categoryId?: string }) => Promise<void>;
+  initialValues: { title: string; content: string; categoryId?: string };
 }) {
   const [noteTitle, setNoteTitle] = useState(initialValues.title);
   const [content, setContent] = useState(initialValues.content);
+  const [categoryId, setCategoryId] = useState<string | undefined>(initialValues.categoryId);
+  const { data: categories = [] } = useGetCategoriesQuery();
 
   const canSubmit = useMemo(() => noteTitle.trim().length > 0, [noteTitle]);
 
@@ -174,6 +181,7 @@ function DrawerForm({
     await onSubmit({
       title: noteTitle.trim(),
       content: content.trim() || "",
+      categoryId: categoryId || undefined,
     });
   }
 
@@ -190,7 +198,20 @@ function DrawerForm({
             disabled={isSaving}
           />
         </Label>
-
+        <FieldGroup>
+          <FieldLabel>Category</FieldLabel>
+          <Selector
+            value={categoryId}
+            onChange={setCategoryId}
+            placeholder="Select a category"
+            disabled={isSaving}
+            options={categories.map((cat) => ({
+              value: cat.id,
+              label: cat.name,
+              color: cat.color,
+            }))}
+          />
+        </FieldGroup>
         <Label>
           Content
           <Textarea
@@ -331,6 +352,19 @@ const Label = styled.label`
   font-weight: 700;
   color: #544a39;
   margin-bottom: 12px;
+`;
+
+const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+`;
+
+const FieldLabel = styled.span`
+  font-size: 13px;
+  font-weight: 700;
+  color: #544a39;
 `;
 
 const Input = styled.input`
