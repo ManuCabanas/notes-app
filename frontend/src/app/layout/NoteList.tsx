@@ -40,6 +40,29 @@ export function NoteList() {
     };
   }, [notes, editingId]);
 
+  // Build filter options - must be before early returns to respect Rules of Hooks
+  const filterOptions = useMemo(() => {
+    if (!notes) return [];
+    
+    const options = categories.map((cat) => ({
+      value: cat.id,
+      label: `${cat.name} (${notes.filter((n) => n.category?.id === cat.id).length})`,
+      color: cat.color,
+    }));
+    
+    // Add uncategorized option
+    const uncategorizedCount = notes.filter((n) => !n.category).length;
+    if (uncategorizedCount > 0) {
+      options.push({
+        value: "uncategorized",
+        label: `Uncategorized (${uncategorizedCount})`,
+        color: "#9CA3AF",
+      });
+    }
+    
+    return options;
+  }, [categories, notes]);
+
   const handleEdit = (id: string) => {
     setEditingId(id);
     setOpen(true);
@@ -99,27 +122,6 @@ export function NoteList() {
       </StateContainer>
     );
   }
-
-  // Build filter options
-  const filterOptions = useMemo(() => {
-    const options = categories.map((cat) => ({
-      value: cat.id,
-      label: `${cat.name} (${notes.filter((n) => n.category?.id === cat.id).length})`,
-      color: cat.color,
-    }));
-    
-    // Add uncategorized option
-    const uncategorizedCount = notes.filter((n) => !n.category).length;
-    if (uncategorizedCount > 0) {
-      options.push({
-        value: "uncategorized",
-        label: `Uncategorized (${uncategorizedCount})`,
-        color: "#9CA3AF",
-      });
-    }
-    
-    return options;
-  }, [categories, notes]);
 
   return (
     <>
